@@ -11,11 +11,9 @@ from pyactor.context import sleep, set_context, create_host, serve_forever, Host
 from pyactor.exceptions import TimeoutError
 import sys, time
 
+
 global dicc
 dicc = {}
-global countingWords
-
-
 class Reducer(object):
 	_tell = ['iniciar_tiempo', 'parar_tiempo', 'trabaja'] 	#asíncrono
 	_ask = [] 						#síncrono
@@ -52,9 +50,8 @@ class Reducer(object):
 				result = 0 
 				print "Word count: \n"
 				for key in dicc.keys():
-					print str(key),":",dicc[key],"\n" 		#para cada clave printeamos el valor --> clave:valor
-		self.parar_tiempo()							#paramos el tiempo (final reducer)
-		
+					print str(key),":",dicc[key],"\n" 		#para cada clave printeamos el valor --> clave:valor		
+			self.parar_tiempo()
 #main
 if __name__ == "__main__": #PARAMETROS: ip_local
 	set_context()
