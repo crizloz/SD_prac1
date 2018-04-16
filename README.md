@@ -13,6 +13,7 @@ La estructura es la siguiente:
 - **master.py:** programa principal que controla el proceso. En esta implementación, se encarga de leer el fichero y partirlo para los distintos mappers.
 - **mapper.py:** actor para la función map.
 - **reducer.py:** actor para la función reduce. Una vez ha recibido el resultado del último mapper para el tiempo y muestra el resultado por pantalla.
+- **secuencial.py:** contiene el map y el reduce en un único fichero para poder usar el programa en secuencial.
 - **script_ini.py:** script para inicializar los actores en diferentes máquinas.
 ## Parámetros
 1. **Nombre fichero:** `int` nombre del fichero que se quiere evaluar.
@@ -32,6 +33,6 @@ python -m SimpleHTTPServer
 ```
 python script_ini.py [nombre_fichero][n_slaves][programa][ip_local][ip_server]
 ```
-## Autores
+## Autores :floppy_disk:
 - Manuel Ruiz Botella - [manurubo](https://github.com/manurubo)
 - Cristina Izquierdo Lozano - [crizloz](https://github.com/crizloz)
