@@ -9,9 +9,9 @@ Practica 1 SD
 
 from pyactor.context import set_context, create_host, serve_forever, Host
 from pyactor.exceptions import TimeoutError
-import commands, sys, io
+import commands, sys, io, os
 
-global host, dicc, i
+global host, dicc, i 
 i = 0
 
 #Clase server
@@ -21,43 +21,42 @@ class Server(object):
 	_ask = []
 	_ref = ['readFile']
 	
-	def readFile(self, hosts_maps, host_red):
-		global dicc, i
-		os.system("wget"+ip_server+"/"+fichero)
-		#file  = io.open(fichero, "r", encoding="latin-1")								#abre el fichero
-		word_total = int(commands.getoutput("wc -w "+fichero+" | cut -d ' ' -f 1")) 	#cuenta el total de palabras
-		lineas_total = int(commands.getoutput("wc -l "+fichero+" | cut -d ' ' -f l")) 	#cuenta el total de líneas
-		print "cw: "+word_total	
+	def readFile(self, hosts_maps, reducer, ip_server, fichero, slaves, countingWords):
+		global dicc, i 
+		os.system("wget "+ip_server+"/"+fichero)
+		fich  = io.open(fichero, "r", encoding="latin-1")								#abre el fichero
 		
-		reduc = host_red.spawn('reducer', 'reducer/Reducer')
+		lineas_total = int(commands.getoutput("wc -l "+fichero+" | cut -d ' ' -f1")) 	#cuenta el total de líneas
+
+		
+
 		num_lines_por_mapa = lineas_total/slaves
 		if (lineas_total % slaves) != 0:
 			num_lines_por_mapa += 1
-		for cliente in range(0, slaves-1):
-				maps[cliente] = hosts_maps[cliente].spawn(str(cliente), 'mapper/Mapper')
-				print "creado cliente"+cliente
+		print hosts_maps[0]
+		print hosts_maps[1]
+		maps={}
+		for cliente in range(0, slaves):
+				maps[cliente] = hosts_maps[cliente].spawn('mapa'+str(cliente), 'mapper/Mapper')
+				print "creado cliente"+str(cliente)
 		directory = os.getcwd()+"/files"
 		print "directorio es:"+directory
 		if not os.path.exists(directory):
 			print "creando directorio para las files"
 			os.makedirs(directory)
-		for cliente_d in range(0, slaves-1):
+		for cliente_d in range(0, slaves):
 			filenueva = io.open(directory+"/file_"+str(cliente_d)+".txt", "w", encoding="latin-1")
 			for linea in range(0, num_lines_por_mapa):
-				line = file.readline()
+				line = fich.readline()
 				if line != "\n":
 					filenueva.write(line)
-			print "file para el "+cliente_d+" creada" 
+			print "file para el "+str(cliente_d)+" creada" 
 			filenueva.close()
-		i = 0
-		reducer.iniciar_tiempo() 			#iniciamos el tiempo del sistema (entrada al primer mapper)
-		for mapa in maps:
-			filetratar = io.open(directory+"/file_"+str(i)+".txt", "r", encoding="latin-1")
-			i += 1
-			print "poniendo a mapear el mapa "+mapa
-			mapa.map(filetratar, reducer)
-			filetratar.close()
-		file.close()
+		reducer.iniciar_tiempo(slaves, countingWords) 			#iniciamos el tiempo del sistema (entrada al primer mapper)
+		for mapa in range(0,slaves):
+			print "poniendo a mapear el mapa "+str(mapa)
+			maps[mapa].map(directory+"/file_"+str(mapa)+".txt", reducer)
+		fich.close()
 		
 
 if __name__ == "__main__": #PARAMETROS: nombre_fichero, n_slaves, programa, ip_local, ip_server
@@ -89,9 +88,11 @@ if __name__ == "__main__": #PARAMETROS: nombre_fichero, n_slaves, programa, ip_l
 	server = host.spawn('server', 'server/Server')
 	print "server listening at port 1277"
 	hosts_maps = {}
-	for num in range(0,slaves-1):
-		hosts_maps[num] = host.lookup_url('http://'+ip_local+':130'+str(i), Host)  #NameError: name 'hosts_maps' is not defined
+
+
+	for num in range(0,slaves):
+		hosts_maps[num] = host.lookup_url('http://'+ip_local+':130'+str(num), Host)  #NameError: name 'hosts_maps' is not defined
 	host_red = host.lookup_url('http://'+ip_local+':1275', Host)
 	reducer = host_red.spawn('reducer', 'reducer/Reducer')
-	server.readFile(hosts_maps,host_red)
+	server.readFile(hosts_maps,reducer,ip_server,fichero,slaves,countingWords)
 	serve_forever()
