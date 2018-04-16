@@ -9,7 +9,7 @@ Practica 1 SD
 
 from pyactor.context import set_context, create_host, serve_forever, Host, sleep, shutdown
 from pyactor.exceptions import TimeoutError
-import server, reducer, sys, io
+import server, reducer, sys, io, urllib
 
 
 class Mapper(object):
@@ -17,10 +17,10 @@ class Mapper(object):
 	_ask = [] 		#síncrono
 	_ref = ['map']
 
-	def map(self, archivo, reducer):
+	def map(self,ip_server, num_archivo, reducer):
 		print "Estoy en el map\n"
 		dicc = {}
-		palabras = io.open(archivo, "r", encoding="utf-8-sig")
+		palabras = urllib.urlopen(ip_server+"/partes/file_"+str(num_archivo))
 		texto = palabras.read()
 		texto = texto.lower()
 		#eliminamos símbolos y signos de puntuación:

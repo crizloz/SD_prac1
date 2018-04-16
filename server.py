@@ -9,7 +9,7 @@ Practica 1 SD
 
 from pyactor.context import set_context, create_host, serve_forever, Host
 from pyactor.exceptions import TimeoutError
-import commands, sys, io, os
+import commands, sys, io, os, urllib
 
 global host, dicc, i 
 i = 0
@@ -23,7 +23,9 @@ class Server(object):
 	
 	def readFile(self, hosts_maps, reducer, ip_server, fichero, slaves, countingWords):
 		global dicc, i 
-		os.system("wget "+ip_server+"/"+fichero)
+		print ip_server+"/"+fichero
+		urllib.urlretrieve(ip_server+"/"+fichero, fichero)
+		print "hola 2"
 		fich  = io.open(fichero, "r", encoding="utf-8-sig")				#abre el fichero
 		
 		lineas_total = int(commands.getoutput("wc -l "+fichero+" | cut -d ' ' -f1")) 	#cuenta el total de líneas
@@ -37,13 +39,10 @@ class Server(object):
 		for cliente in range(0, slaves):
 				maps[cliente] = hosts_maps[cliente].spawn('mapa'+str(cliente), 'mapper/Mapper')
 				print "creado cliente"+str(cliente)
-		directory = os.getcwd()+"/files"
+		directory = os.getcwd()
 		print "directorio es:"+directory
-		if not os.path.exists(directory):
-			print "creando directorio para las files"
-			os.makedirs(directory)
 		for cliente_d in range(0, slaves):
-			filenueva = io.open(directory+"/file_"+str(cliente_d)+".txt", "w", encoding="utf-8-sig")
+			filenueva = io.open(directory+"/texts/partes/file_"+str(cliente_d)+".txt", "w", encoding="utf-8-sig")
 			for linea in range(0, num_lines_por_mapa):
 				line = fich.readline()
 				if line != "\n":
@@ -53,7 +52,7 @@ class Server(object):
 		reducer.iniciar_tiempo(slaves, countingWords) 			#iniciamos el tiempo del sistema (entrada al primer mapper)
 		for mapa in range(0,slaves):
 			print "poniendo a mapear el mapa "+str(mapa)
-			maps[mapa].map(directory+"/file_"+str(mapa)+".txt", reducer)
+			maps[mapa].map(ip_server,str(mapa)+".txt", reducer)
 		fich.close()
 		
 
