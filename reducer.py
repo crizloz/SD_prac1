@@ -4,21 +4,17 @@ Manuel Ruiz Botella
 Cristina Izquierdo Lozano
 -------------------------
 Práctica 1 SD
+-------------
+Reducer
 '''
-#------------------------------------------------------------------------------REDUCER---------------------------------------------------------------- 
-
 from pyactor.context import sleep, set_context, create_host, serve_forever, Host
 from pyactor.exceptions import TimeoutError
 import sys, time
 
-
-global dicc
-dicc = {}
 class Reducer(object):
 	_tell = ['iniciar_tiempo', 'parar_tiempo', 'trabaja'] 	#asíncrono
 	_ask = [] 						#síncrono
-	global slaves
-	
+
 	def iniciar_tiempo(self, slaves, programa):
 		self.tiempoInicial = time.time() 		#nos guardamos el tiempo inicial
 		self.slaves = slaves				#seteamos el número de slaves
@@ -31,7 +27,7 @@ class Reducer(object):
 	
 
 	def trabaja(self, palabras):
-		global dicc
+		dicc = {}
 		for key in palabras.keys():
 			dicc[key] = dicc.get(key, 0) + palabras[key]    	#si ya esta en el diccionario le sumamos 1 y si no está le pondrá el valor de 1
 		self.slaves=self.slaves-1
@@ -39,18 +35,18 @@ class Reducer(object):
 			if (self.programa==True):
 				result = 0 
 				for key in dicc.keys():
-					result = result +int(dicc[key]) 
-				print "Counting Words: ",result	
+					result = result +int(dicc[key])
+				print "Counting Words: ",result
 			else:
-				result = 0 
+				result = 0
 				print "Word count: \n"
 				for key in dicc.keys():
-					print str(key),":",dicc[key],"\n" 	#para cada clave printeamos el valor --> clave:valor		
+					print str(key),":",dicc[key],"\n"	#para cada clave printeamos el valor --> clave:valor		
 			self.parar_tiempo()					#paramos el tiempo (final reducer)
 
 if __name__ == "__main__": #PARAMETROS: ip_local
 	set_context()
 	direccion = sys.argv[1]
-	host = create_host('http://'+direccion+':1275') 
+	host = create_host('http://'+direccion+':1275')
 	print "Reducer creado en http://"+direccion+":1275\n"
 	serve_forever()

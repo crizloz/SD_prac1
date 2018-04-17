@@ -4,24 +4,20 @@ Manuel Ruiz Botella
 Cristina Izquierdo Lozano
 -------------------------
 Práctica 1 SD
+--------------
+MAIN - master
 '''
-#-------------------------------------------------------------------------------MAIN-master--------------------------------------------------------------------- 
-
 from pyactor.context import set_context, create_host, serve_forever, Host
 from pyactor.exceptions import TimeoutError
 import commands, sys, io, os, urllib
-
-global host, dicc, i 
-i = 0
 
 class Server(object):
 	_tell = ['readFile']
 	_ask = []
 	_ref = ['readFile']
-	
+
 	def readFile(self, hosts_maps, reducer, ip_server, fichero, slaves, countingWords):
-		global dicc, i 
-		#print ip_server+"/"+fichero
+		i = 0 
 		urllib.urlretrieve(ip_server+"/"+fichero, fichero)
 		fich  = io.open(fichero, "r", encoding="utf-8-sig")				#abre el fichero
 		

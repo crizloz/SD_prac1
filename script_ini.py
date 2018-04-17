@@ -4,8 +4,9 @@ Manuel Ruiz Botella
 Cristina Izquierdo Lozano
 -------------------------
 Práctica 1 SD
+-------------
+Inicializar proceso
 '''
-#------------------------------------------------------------------------------Inicilizar proceso----------------------------------------------------------------
 import os, sys
 
 #	echo -e "1. Nombre fichero"

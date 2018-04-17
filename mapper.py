@@ -4,11 +4,10 @@ Manuel Ruiz Botella
 Cristina Izquierdo Lozano
 -------------------------
 Práctica 1 SD
+--------------
+Mapper
 '''
-#-------------------------------------------------------------------------------------MAPPER------------------------------------------------------------------------------------ 
-
-from pyactor.context import set_context, create_host, serve_forever, Host, sleep, shutdown
-from pyactor.exceptions import TimeoutError
+from pyactor.context import set_context, create_host, serve_forever, sleep, shutdown
 import server, reducer, sys, io, urllib
 
 
@@ -23,7 +22,7 @@ class Mapper(object):
 		texto = palabras.read()
 		texto = texto.lower()
 		#eliminamos símbolos y signos de puntuación:
-		texto= texto.replace('.', '').replace(',', '').replace(':', '').replace(';', '').replace('\n', ' ').replace('\r', ' ').replace('#', '').replace('[', '').replace(']', '').replace('*','').replace('  ', ' ').replace('-', ' ').replace('_', '').replace('?', '').replace('!', '').replace('\'', ' ').replace('\"', '').replace('(', '').replace(')', '').replace('=', '').replace('<', '').replace('>', '')		
+		texto= texto.replace('.', '').replace(',', '').replace(':', '').replace(';', '').replace('\n', ' ').replace('\r', ' ').replace('#', '').replace('[', '').replace(']', '').replace('*','').replace('  ', ' ').replace('-', ' ').replace('_', '').replace('?', '').replace('!', '').replace('\'', ' ').replace('\"', '').replace('(', '').replace(')', '').replace('=', '').replace('<', '').replace('>', '')	
 		splits = texto.split(" ") 				#separamos la linea en palabras
 		for x in splits: 					#para cada palabra en la lista de palabras de la linea
 			if x.endswith('-') or x.startswith('-'):  	#eliminamos los guiones de las conversaciones
