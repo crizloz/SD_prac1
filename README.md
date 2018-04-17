@@ -10,7 +10,7 @@ Para más información sobre pyactor y su instalación: [PyActor](https://github
 ## Diseño
 El proyecto tiene una arquitectura master/slave, donde hay un reducer y el número deseado de mappers, controlados por el master.
 La estructura es la siguiente:
-- **master.py:** programa principal que controla el proceso. En esta implementación, se encarga de leer el fichero y partirlo para los distintos mappers.
+- **server.py:** programa principal que controla el proceso. En esta implementación, se encarga de leer el fichero y partirlo para los distintos mappers.
 - **mapper.py:** actor para la función map.
 - **reducer.py:** actor para la función reduce. Una vez ha recibido el resultado del último mapper para el tiempo y muestra el resultado por pantalla.
 - **secuencial.py:** contiene el map y el reduce en un único fichero para poder usar el programa en secuencial.
