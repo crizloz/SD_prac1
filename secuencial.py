@@ -5,7 +5,7 @@ Cristina Izquierdo Lozano
 -------------------------
 Practica 1 SD
 '''
-#-----------------------SECUENCIAL--------------------------------- 
+#-------------------------------------------------------------------SECUENCIAL--------------------------------------------------------------- 
 
 from pyactor.context import set_context, create_host, sleep, shutdown, Host
 from pyactor.exceptions import TimeoutError
@@ -76,7 +76,7 @@ class Mapper(object):
 
 
 	
-if __name__ == "__main__":
+if __name__ == "__main__": #PARÁMETROS: direccion_IP, nombre_fichero, programa
 	set_context()
 	direccion=str(sys.argv[1])
 	fichero=str(sys.argv[2])
