@@ -7,8 +7,8 @@ Práctica 1 SD
 --------------
 Mapper
 '''
-from pyactor.context import set_context, create_host, serve_forever, shutdown
-import server, sys, urllib
+from pyactor.context import set_context, create_host, serve_forever
+import sys, urllib
 
 
 class Mapper(object):

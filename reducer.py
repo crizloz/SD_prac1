@@ -7,7 +7,7 @@ Práctica 1 SD
 -------------
 Reducer
 '''
-from pyactor.context import sleep, set_context, create_host, serve_forever
+from pyactor.context import set_context, create_host, serve_forever
 import sys, time
 
 global dicc
@@ -26,7 +26,7 @@ class Reducer(object):
 		tiempoFinal = time.time() 			#nos guardamos el tiempo final
 		tiempo = tiempoFinal - self.tiempoInicial 	#hacemos la resta entre el inicial y el final
 		print "Tiempo: ",tiempo
-	
+
 
 	def trabaja(self, palabras):
 		global dicc

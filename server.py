@@ -37,7 +37,7 @@ class Server(object):
 		for mapa in range(0,slaves):
 			maps[mapa].map(ip_server,str(mapa)+".txt", reducer)
 		fich.close()
-		
+
 
 if __name__ == "__main__": #PARAMETROS: nombre_fichero, n_slaves, programa, ip_local, ip_server
 	set_context()
