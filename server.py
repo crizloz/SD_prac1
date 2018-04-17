@@ -16,12 +16,9 @@ class Server(object):
 	_ref = ['readFile']
 
 	def readFile(self, hosts_maps, reducer, ip_server, fichero, slaves, countingWords):
-		i = 0 
 		urllib.urlretrieve(ip_server+"/"+fichero, fichero)
 		fich  = io.open(fichero, "r", encoding="utf-8-sig")				#abre el fichero
 		lineas_total = int(commands.getoutput("wc -l "+fichero+" | cut -d ' ' -f1")) 	#cuenta el total de líneas
-
-		
 		num_lines_por_mapa = lineas_total/slaves
 		if (lineas_total % slaves) != 0:
 			num_lines_por_mapa += 1

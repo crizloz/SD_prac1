@@ -7,8 +7,8 @@ Práctica 1 SD
 --------------
 Mapper
 '''
-from pyactor.context import set_context, create_host, serve_forever, sleep, shutdown
-import server, sys, io, urllib
+from pyactor.context import set_context, create_host, serve_forever, shutdown
+import server, sys, urllib
 
 
 class Mapper(object):
@@ -22,7 +22,7 @@ class Mapper(object):
 		texto = palabras.read()
 		texto = texto.lower()
 		#eliminamos símbolos y signos de puntuación:
-		texto= texto.replace('.', '').replace(',', '').replace(':', '').replace(';', '').replace('\n', ' ').replace('\r', ' ').replace('#', '').replace('[', '').replace(']', '').replace('*','').replace('  ', ' ').replace('-', ' ').replace('_', '').replace('?', '').replace('!', '').replace('\'', ' ').replace('\"', '').replace('(', '').replace(')', '').replace('=', '').replace('<', '').replace('>', '')	
+		texto= texto.replace('.', '').replace(',', '').replace(':', '').replace(';', '').replace('\n', ' ').replace('\r', ' ').replace('#', '').replace('[', '').replace(']', '').replace('*','').replace('  ', ' ').replace('-', ' ').replace('_', '').replace('?', '').replace('!', '').replace('\'', ' ').replace('\"', '').replace('(', '').replace(')', '').replace('=', '').replace('<', '').replace('>', '')
 		splits = texto.split(" ")				#separamos la linea en palabras
 		for x in splits: 					#para cada palabra en la lista de palabras de la linea
 			if (x==''):

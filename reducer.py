@@ -7,11 +7,12 @@ Práctica 1 SD
 -------------
 Reducer
 '''
-from pyactor.context import sleep, set_context, create_host, serve_forever, Host
+from pyactor.context import sleep, set_context, create_host, serve_forever
 import sys, time
 
 global dicc
 dicc={}
+
 class Reducer(object):
 	_tell = ['iniciar_tiempo', 'parar_tiempo', 'trabaja'] 	#asíncrono
 	_ask = [] 						#síncrono
@@ -20,7 +21,7 @@ class Reducer(object):
 		self.tiempoInicial = time.time() 		#nos guardamos el tiempo inicial
 		self.slaves = slaves				#seteamos el número de slaves
 		self.programa = programa			#seteamos el programa que usaremos
-	
+
 	def parar_tiempo(self):
 		tiempoFinal = time.time() 			#nos guardamos el tiempo final
 		tiempo = tiempoFinal - self.tiempoInicial 	#hacemos la resta entre el inicial y el final
@@ -42,7 +43,7 @@ class Reducer(object):
 				result = 0
 				print "Word count: \n"
 				for key in dicc.keys():
-					print str(key),":",dicc[key],"\n"	#para cada clave printeamos el valor --> clave:valor	
+					print str(key),":",dicc[key],"\n"	#para cada clave printeamos el valor --> clave:valor
 			self.parar_tiempo()					#paramos el tiempo (final reducer)
 
 if __name__ == "__main__": #PARAMETROS: ip_local
