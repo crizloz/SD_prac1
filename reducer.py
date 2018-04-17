@@ -10,6 +10,8 @@ Reducer
 from pyactor.context import sleep, set_context, create_host, serve_forever, Host
 import sys, time
 
+global dicc
+dicc={}
 class Reducer(object):
 	_tell = ['iniciar_tiempo', 'parar_tiempo', 'trabaja'] 	#asíncrono
 	_ask = [] 						#síncrono
@@ -26,7 +28,7 @@ class Reducer(object):
 	
 
 	def trabaja(self, palabras):
-		dicc = {}
+		global dicc
 		for key in palabras.keys():
 			dicc[key] = dicc.get(key, 0) + palabras[key]    	#si ya esta en el diccionario le sumamos 1 y si no está le pondrá el valor de 1
 		self.slaves=self.slaves-1
