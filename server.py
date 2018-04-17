@@ -8,7 +8,6 @@ Práctica 1 SD
 MAIN - master
 '''
 from pyactor.context import set_context, create_host, serve_forever, Host
-from pyactor.exceptions import TimeoutError
 import commands, sys, io, os, urllib
 
 class Server(object):
@@ -20,7 +19,6 @@ class Server(object):
 		i = 0 
 		urllib.urlretrieve(ip_server+"/"+fichero, fichero)
 		fich  = io.open(fichero, "r", encoding="utf-8-sig")				#abre el fichero
-		
 		lineas_total = int(commands.getoutput("wc -l "+fichero+" | cut -d ' ' -f1")) 	#cuenta el total de líneas
 
 		
@@ -33,7 +31,7 @@ class Server(object):
 		directory = os.getcwd()
 		for cliente_d in range(0, slaves):
 			filenueva = io.open(directory+"/texts/partes/file_"+str(cliente_d)+".txt", "w", encoding="utf-8-sig")
-			for linea in range(0, num_lines_por_mapa):
+			for line in range(0, num_lines_por_mapa):
 				line = fich.readline()
 				if line != "\n":
 					filenueva.write(line)

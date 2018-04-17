@@ -39,7 +39,7 @@ class Reducer(object):
                                 result = 0
                                 print "Word count: \n"
                                 for key in dicc.keys():
-                                        print str(key),":",dicc[key],"\n"	#para cada clave printeamos el valor --> clave:valor            
+                                        print str(key),":",dicc[key],"\n"	#para cada clave printeamos el valor --> clave:valor
                         self.parar_tiempo()					#paramos el tiempo (final reducer)
 class Mapper(object):
         _tell = ['map']         #asíncrono
@@ -63,7 +63,7 @@ class Mapper(object):
                 reducer.trabaja(diccionario)
 
 
-	
+
 if __name__ == "__main__": #PARÁMETROS: direccion_IP, nombre_fichero, programa
 	set_context()
 	direccion=str(sys.argv[1])
