@@ -33,6 +33,6 @@ python -m SimpleHTTPServer
 ```
 python script_ini.py [nombre_fichero][n_slaves][programa][ip_local][ip_server]
 ```
-## Autores :floppy_disk:
+## Autores
 - Manuel Ruiz Botella - [manurubo](https://github.com/manurubo)
 - Cristina Izquierdo Lozano - [crizloz](https://github.com/crizloz)
