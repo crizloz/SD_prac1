@@ -3,7 +3,7 @@
 Manuel Ruiz Botella
 Cristina Izquierdo Lozano
 -------------------------
-Practica 1 SD
+Práctica 1 SD
 '''
 #------------------------------------------------------------------------------REDUCER---------------------------------------------------------------- 
 
@@ -32,31 +32,25 @@ class Reducer(object):
 
 	def trabaja(self, palabras):
 		global dicc
-		print "Estoy en el reduce\n"
-
 		for key in palabras.keys():
 			dicc[key] = dicc.get(key, 0) + palabras[key]    	#si ya esta en el diccionario le sumamos 1 y si no está le pondrá el valor de 1
-		
-		print "Esclavos restantes: ",self.slaves
 		self.slaves=self.slaves-1
 		if(self.slaves==0):
 			if (self.programa==True):
 				result = 0 
 				for key in dicc.keys():
 					result = result +int(dicc[key]) 
-				#self.parar_tiempo()				#paramos el tiempo (final reducer)
 				print "Counting Words: ",result	
 			else:
 				result = 0 
 				print "Word count: \n"
 				for key in dicc.keys():
-					print str(key),":",dicc[key],"\n" 		#para cada clave printeamos el valor --> clave:valor		
-			self.parar_tiempo()
-#main
+					print str(key),":",dicc[key],"\n" 	#para cada clave printeamos el valor --> clave:valor		
+			self.parar_tiempo()					#paramos el tiempo (final reducer)
+
 if __name__ == "__main__": #PARAMETROS: ip_local
 	set_context()
 	direccion = sys.argv[1]
 	host = create_host('http://'+direccion+':1275') 
 	print "Reducer creado en http://"+direccion+":1275\n"
-
 	serve_forever()

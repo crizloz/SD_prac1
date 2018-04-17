@@ -3,7 +3,7 @@
 Manuel Ruiz Botella
 Cristina Izquierdo Lozano
 -------------------------
-Practica 1 SD
+Práctica 1 SD
 '''
 #-------------------------------------------------------------------SECUENCIAL--------------------------------------------------------------- 
 
@@ -33,45 +33,40 @@ class Reducer(object):
 	
 	def trabaja(self, palabras):
                 global dicc
-                print "Estoy en el reduce\n"
-
                 for key in palabras.keys():
                         dicc[key] = dicc.get(key, 0) + palabras[key]            #si ya esta en el diccionario le sumamos 1 y si no está le pondrá el valor de 1
-
-                print "Esclavos restantes: ",self.slaves
                 self.slaves=self.slaves-1
                 if(self.slaves==0):
                         if (self.programa==True):
                                 result = 0
                                 for key in dicc.keys():
                                         result = result +int(dicc[key])
-                                #self.parar_tiempo()                            #paramos el tiempo (final reducer)
                                 print "Counting Words: ",result
                         else:
                                 result = 0
                                 print "Word count: \n"
                                 for key in dicc.keys():
-                                        print str(key),":",dicc[key],"\n"               #para cada clave printeamos el valor --> clave:valor            
-                        self.parar_tiempo()
+                                        print str(key),":",dicc[key],"\n"       #para cada clave printeamos el valor --> clave:valor            
+                        self.parar_tiempo()					#paramos el tiempo (final reducer)
 class Mapper(object):
         _tell = ['map']         #asíncrono
         _ask = []               #síncrono
         _ref = ['map']
 
         def map(self, archivo, reducer):
-                print "Estoy en el map\n"
                 diccionario = {}
-                palabras = io.open(archivo, "r", encoding="utf-8-sig")
+		d = os.getcwd()							#obtenemos el path actual
+		path = d+"/texts/"+archivo					#montamos el path donde ir a buscar los ficheros
+                palabras = io.open(path, "r", encoding="utf-8-sig")
                 texto = palabras.read()
                 texto = texto.lower()
                 #eliminamos símbolos y signos de puntuación:
                 texto= texto.replace('.', '').replace(',', '').replace(':', '').replace(';', '').replace('\n', ' ').replace('\r', ' ').replace('#', '').replace('[', '').replace(']', '').replace('*','').replace('  ', ' ').replace('-', ' ').replace('_', '').replace('?', '').replace('!', '').replace('\'', ' ').replace('\"', '').replace('(', '').replace(')', '').replace('=', '').replace('<', '').replace('>', '')
-                splits = texto.split(" ")               #separamos la linea en palabras
-                for x in splits:                        #para cada palabra en la lista de palabras de la linea
-                        if x.endswith('-') or x.startswith('-'):  #eliminamos los guiones de las conversaciones
+                splits = texto.split(" ")               		#separamos la linea en palabras
+                for x in splits:                        		#para cada palabra en la lista de palabras de la linea
+                        if x.endswith('-') or x.startswith('-'):  	#eliminamos los guiones de las conversaciones
                                 x.replace('-','')
-                        diccionario[x] = diccionario.get(x, 0) + 1    #get(palabra, default) --> si el vector no tiene la palabra x devuelve un 0 por defecto, si la palabra esta en el diccionario te devuelve las ocurrencias de esta. A esto le sumamos 1
-                print "antes reducer trabaja"
+                        diccionario[x] = diccionario.get(x, 0) + 1   	#get(palabra, default) --> si el vector no tiene la palabra x devuelve un 0 por defecto, si la palabra esta en el diccionario te devuelve las ocurrencias de esta. A esto le sumamos 1
                 reducer.trabaja(diccionario)
 
 
