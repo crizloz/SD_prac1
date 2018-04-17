@@ -1,5 +1,7 @@
 # Communication models and middleware
 ###### Sistemas Distribuidos - Práctica 1
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/27b7d46671364ba891d2f47405c490b5)](https://www.codacy.com/app/crizloz/SD_prac1?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=crizloz/SD_prac1&amp;utm_campaign=Badge_Grade)
+
 Implementación de un MapReduce simplificado para la primera práctica de la asignatura de Sistemas Distribuidos.
 ## Prerequisitos
 Esta implementación utiliza el middleware pyactor. Para instalarlo:
